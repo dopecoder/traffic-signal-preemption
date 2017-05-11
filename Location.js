@@ -21,7 +21,52 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, dest_lat
             // raw response 
             console.log(response);
         });
+}
+
+Location.prototype.get_distane_to_all_signals = function(TrafficSignals){
+
+}
+
+Location.prototype.sort_distances = function(){
+
+}
+
+Location.prototype.swap = function(items, firstIndex, secondIndex, signal_array){
+    var temp = items[firstIndex];
+    items[firstIndex] = items[secondIndex];
+    items[secondIndex] = temp;
+
+    temp = signal_array[firstIndex];
+    signal_array[firstIndex] = signal_array[secondIndex];
+    signal_array[secondIndex] = temp;
+}
+
+Location.prototype.partition = function(items, left, right, signal_array) {
+
+    var pivot   = items[Math.floor((right + left) / 2)],
+        i       = left,
+        j       = right;
+
+
+    while (i <= j) {
+
+        while (items[i] < pivot) {
+            i++;
+        }
+
+        while (items[j] > pivot) {
+            j--;
+        }
+
+        if (i <= j) {
+            swap(items, i, j);
+            i++;
+            j--;
+        }
     }
+
+    return i;
+}
 
 //https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=12.927708,77.588773&destinations=12.928613,77.586343&key=AIzaSyBGdGBTzAqSxZ4rNH_rReF6TWVLgQNDEsA
 

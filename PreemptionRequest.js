@@ -6,7 +6,7 @@ var PreemptionRequest = function(){
     this._id;
     this.traffic_id;   
     this.ambulance_id;
-    this.direction_data;
+    //this.direction_data;
     this.authentication_data;
     this.options; 
     this.locations = new Array();
@@ -55,18 +55,83 @@ PreemptionCompletionListner.prototype.find_distances = function(){
 }
 
 PreemptionCompletionListner.prototype.get_correct_traffic_signal = function(){
-    for(var i=0; i<this.locations.length; i++){
-        for(var j=i; j<this.locations[i].length; j++){
-            smallest = this.locations[i][j];
-            for(var k=0; k<this.locations[i].length; k++){
-                if(this.locations[i][j] < smallest){
-                    smallest = this.locations[i][j];
+    //for(var i=0; i<this.locations.length; i++){
+        //set signals to an ordered array later to sort with the location array
+        var signals = new Array();
+        for(var i = 0; i<locs.length; i++){
+            signals.push(i+1);
+        }
+
+        var locs = [8, 4, 1];
+
+        var sortedlist = new Array();
+        var smallest = locs[0];
+        for(var j=0; j<locs.length; j++){
+            var index = 0;
+            for(var k=j; k<locs.length; k++){
+                if(locs[k] < smallest){
+                    smallest = locs[k];
+                    index = k;
                 }
             }
-            var temp = this.locations[i][j]
-            this.sortedlist[i].push(j);
+            locs[index] = locs[0];
+            locs[0] = smallest; 
+            sortedlist.push(smallest);
         }
         
+    //}
+}
+
+PreemptionCompletionListner.prototype.Sort(items)
+{
+    if (items.Length <= 1)
+    {
+        return;
+    }
+ 
+    var leftSize = items.Length / 2;
+    var rightSize = items.Length - leftSize;
+ 
+    var left = items.slice(0, leftSize);//new Array(leftSize);
+    var right = items.slice(leftSize, rightSize);//new Array(rightSize);
+    //left = left[]
+    //Array.Copy(items, 0, left, 0, leftSize);
+    //Array.Copy(items, leftSize, right, 0, rightSize);
+ 
+    Sort(left);
+    Sort(right);
+    Merge(items, left, right);
+}
+ 
+PreemptionCompletionListner.prototype.Merge(items, left, right, signals)
+{
+    var leftIndex = 0;
+    var rightIndex = 0;
+    var targetIndex = 0;
+ 
+    var remaining = left.Length + right.Length;
+ 
+    while(remaining > 0)
+    {
+        if (leftIndex >= left.Length)
+        {
+            items[targetIndex] = right[rightIndex++];
+        }
+        else if (rightIndex >= right.Length)
+        {
+            items[targetIndex] = left[leftIndex++];
+        }
+        else if (left[leftIndex].CompareTo(right[rightIndex]) < 0)
+        {
+            items[targetIndex] = left[leftIndex++];
+        }
+        else
+        {
+            items[targetIndex] = right[rightIndex++];
+        }
+ 
+        targetIndex++;
+        remaining--;
     }
 }
 
