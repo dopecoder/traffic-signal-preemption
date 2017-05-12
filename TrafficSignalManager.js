@@ -1,3 +1,5 @@
+var TrafficSignalModel = require('./TrafficSignalSchema.js');
+
 
 var TrafficSignalManager = (function(){
     "use strict";
@@ -13,6 +15,9 @@ var TrafficSignalManager = (function(){
         this.no_of_traffic_signals;
         this.requests;
         this.no_of_requests;
+        
+        this.mongoose   = require('mongoose');
+        mongoose.connect('mongodb://localhost:27017/signals'); // connect to our database
     }
 
     Singleton.getInstance = function(){
@@ -21,6 +26,16 @@ var TrafficSignalManager = (function(){
 
     Singleton.init_traffic_signals = function(){
         //retrieve from mongodb
+        TrafficSignalModel.find(function(err, signals) {
+			if (err)
+				res.send(err);
+			
+			console.log(JSON.parse(signals));
+            if(this.traffic_signals == null){
+			    this.traffic_signals = new  Array();
+            }
+			this.traffic_signals = JSON.parse(signals);
+		});
     }
 
     Singleton.save_signals = function(){

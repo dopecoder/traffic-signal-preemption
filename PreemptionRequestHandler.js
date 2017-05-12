@@ -57,7 +57,7 @@ var PreemptionRequestHandler = (function(){
 
     Singleton.prototype.onLocationChanged = function(Request){
         for(var request_key of request_key_list){
-            if(request_key == Request._id){
+            if(request_key == Request.authentication_data){
                 request = request_list[request];
                 var location = new Location(Request.direction_data.latitude, Request.direction_data.longitude);
                 request.update(location);
