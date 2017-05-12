@@ -1,9 +1,14 @@
 var PreemptionRequestHandler = require('./PreemptionRequestHandler.js');
 var TrafficSignalManager = require('./TrafficSignalManager.js');
+var express   = require('express');
+var app       = express();
 
-TrafficSignal.getInstance().init_traffic_signals();
+
+TrafficSignalManager.getInstance().init_traffic_signals();
 var handler = PreemptionRequestHandler.getInstance();
 
+var server    = app.listen(3033);
+var io        = require('socket.io').listen(server);
 
 server.listen(80);
 

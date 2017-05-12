@@ -44,7 +44,7 @@ var PreemptionRequestHandler = (function(){
 
     }
 
-    Singleton.prototype.onRegister(Request) = function(){
+    Singleton.prototype.onRegister = function(Request){
         for(var request_key of request_key_list){
             if(request_key == Request.authentication_data){
                 request_list[request] = Request;
@@ -65,4 +65,9 @@ var PreemptionRequestHandler = (function(){
         }
     }
 
+    return Singleton;
+
 }());
+
+
+module.exports = PreemptionRequestHandler;
