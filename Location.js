@@ -68,6 +68,35 @@ Location.prototype.partition = function(items, left, right, signal_array) {
     return i;
 }
 
+Location.prototype.quickSort = function(items, left, right, signal_array) {
+
+    var index;
+
+    if (items.length > 1) {
+
+        left = typeof left != "number" ? 0 : left;
+        right = typeof right != "number" ? items.length - 1 : right;
+
+
+        index = partition(items, left, right, signal_array);
+
+        if (left < index - 1) {
+            quickSort(items, left, index - 1, signal_array);
+        }
+
+        if (index < right) {
+            quickSort(items, index, right, signal_array);
+        }
+
+    }
+
+    return signal_array;
+}
+
+// first call
+var result = quickSort(items);
+
+
 //https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=12.927708,77.588773&destinations=12.928613,77.586343&key=AIzaSyBGdGBTzAqSxZ4rNH_rReF6TWVLgQNDEsA
 
 
