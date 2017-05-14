@@ -1,7 +1,9 @@
 var LinkedList = require('./DoublyLinkedList.js');
 var QueueManager = require('./QueueManager.js');
+var TrafficSignalManager = require('./TrafficSignalManager.js');
 
-console.log(QueueManager);
+console.log("Yaay! " + QueueManager);
+console.log("Yaay2! " + TrafficSignalManager);
 
 var PreemptionCompletionListner = (function () {
     "use strict";
@@ -49,76 +51,3 @@ var PreemptionCompletionListner = (function () {
 }());
 
 module.exports = PreemptionCompletionListner;
-
-//console.log(PreemptionCompletionListner);
-
-/*var a = PreemptionRequestCompletionListner.getInstance();
-var b = PreemptionRequestCompletionListner.getInstance();
-a.addObserver(a);
-
-console.log(a === b);*/
-
-
-
-/*
-var PreemptionRequestCompletionListner = function(){
-
-    var instance;
-
-    PreemptionRequestCompletionListner = function(){
-        return instance;
-    }
-
-    PreemptionRequestCompletionListner.prototype = this;
-
-    PreemptionRequestCompletionListner.prototype.addObserver = function(Request){
-        this.observer_list.addBack(Request);
-        if(QueueManager.seekLastElement(Request.traffic_id) == null){
-            this.onResponse({traffic_id:Request.traffic_id});
-        }
-    }
-
-    PreemptionRequestCompletionListner.prototype.removeObserver = function(Request){
-        /*this.temp = this.list.head;
-        while(this.temp){
-            if(this.temp.data === Observer){
-                if(this.temp === this.list.head){
-                    this.list.head = this.temp.next;
-                    this.list.head.prev = null;
-                    return;
-                    }else{
-                    this.temp.prev.next = this.temp.next;
-                    this.temp.next.prev = this.temp.prev;
-                    return;
-                }
-            }
-            this.temp = this.temp.next;
-        }*/
-        /*this.observer_list.popElement(Request);
-    }
-
-    PreemptionRequestCompletionListner.prototype.onResponse = function(response){
-        this.temp = this.observer_list.head;
-        while(this.temp){
-            this.temp.data.notify(response.traffic_id);
-            this.temp = this.temp.next;
-        }
-    }
-
-    /*PreemptionRequestCompletionListner.prototype.check_and_notify = function(){
-        for(queue in this.queues){
-            if(queue.is_empty()){
-                
-            }
-        }
-    }*/
-
-    /*instance = new PreemptionRequestCompletionListner();
-    instance.constructor = PreemptionRequestCompletionListner;
-
-
-    //declare all the variables as instance.
-    instance.observer_list = new LinkedList();
-
-    return instance;
-}*/

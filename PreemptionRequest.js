@@ -1,21 +1,23 @@
 var QueueManager = require('./QueueManager.js');
 var PreemptionCompletionListner = require('./PreemptionCompletionListner.js');
+var TrafficSignalManager = require('./TrafficSignalManager.js');
 
-console.log(PreemptionCompletionListner);
-var PreemptionRequest = function(){
-    this._id;
-    this.traffic_id;   
-    this.ambulance_id;
-    //this.direction_data;
-    this.authentication_data;
-    this.options; 
+
+
+console.log("Ahh! " + TrafficSignalManager);
+
+var PreemptionRequest = function(_id, traffic_id, authentication_data, direction_data){
+    this._id = _id;
+    this.traffic_id = traffic_id;
+    this.direction_data = direction_data;
+    this.authentication_data = authentication_data;
     this.locations = new Array();
     //this.no_of_locations = 0;
 }
 
 PreemptionRequest.prototype.notify = function(traffic_id){
     console.log("traffic_id of obj : " + this.traffic_id + " taffic id of finished : " + traffic_id + " with last element as :");
-    console.log(QueueManager.getInstance().seekLastElement(traffic_id));
+    //console.log(QueueManager.getInstance().seekLastElement(traffic_id));
     if(this.traffic_id == traffic_id && QueueManager.getInstance().seekLastElement(traffic_id)){
         //console.log("executing 1");
         //console.log("comparing " + this._id + " and " + QueueManager.getInstance().seekLastElement(traffic_id).data._id);
@@ -28,111 +30,69 @@ PreemptionRequest.prototype.notify = function(traffic_id){
             QueueManager.getInstance().popRequest(traffic_id)
             //execute itself.
             this.execute_request();
+	          console.log("executing request with id : " + traffic_id);
         }
     }
 };
 
-PreemptionCompletionListner.prototype.update = function(Request){
+PreemptionRequest.prototype.update = function(location, request){
+
+    var that = this;
+    var req_obj = request;
+    console.log('called update');
     //update the variables
-    var distance = this.find_distace_to_all_signals(Request);
-    this.locations.push(distance);
-    //this.no_of_locations=this.no_of_locations+1;
-    //check if enough data is recieved
-    if(this.locations.length > 15){
-        //get the traffic signal id
-        //update this object
-        //queue the object to QueueManager
-        //send a response to the phone its successful
-    }
+    location.get_nearest(TrafficSignalManager).then(function(v){
+      console.log("get_nearest is resolved "+ v);
+      console.log(v);
+      that.locations.push(v[0]);
+      console.log("LENGTH : " + that.locations.length);
+      if(that.locations.length > 4){
+        TrafficSignalManager.getInstance().get_signal(v[0]).then(function(result){
+          console.log("get_signal resolved " + result);
+
+          console.log("REQ OBJ : " + req_obj);
+          request.traffic_id = result._id;
+          //queue the object to QueueManager
+          var qManager = QueueManager.getInstance();
+          qManager.addRequest(req_obj);
+          //send a response to the phone its successful
+          console.log("REQUEST IS BEING ADDED TO QUEUE!");
+
+        }).catch(function(result){
+          console.log("ERR : " + result);
+        });
+
+      }
+
+      //this.locations.push(signal);
+      //this.no_of_locations=this.no_of_locations+1;
+      //check if enough data is recieved
+      /*console.log("LOCATIONS LENGTH : " + this.locations.length);
+      if(this.locations.length > 3){
+          //get the traffic signal id
+          TrafficSignalManager.getInstance().get_signal(this.locations[0]).then(function(v){
+            console.log("Turning green on LINE 48 of PR.js");
+          }).catch(function(v){
+            console.log('ERROR : ' + v);
+          });
+          //console.log(signal);
+          //update this object
+          //request.traffic_id = signal;
+          //queue the object to QueueManager
+          //var qManagerB = QueueManager.getInstance();
+          //qManagerB.addRequest(request);
+          //send a response to the phone its successful
+          console.log("REQUEST IS BEING ADDED TO QUEUE!");
+      }*/
+    }).catch(function(v){
+        console.log('ERROR : ' + v);
+    });
+
 }
 
-PreemptionCompletionListner.prototype.find_distances = function(){
-    for(var distances of this.locations){
-        for(var i=0; i<distances.length; i++){
-            this.get_distance(distances[i].latitude, distances[i].longitude);
-        }
-    }
-}
-
-PreemptionCompletionListner.prototype.get_correct_traffic_signal = function(){
-    //for(var i=0; i<this.locations.length; i++){
-        //set signals to an ordered array later to sort with the location array
-        var signals = new Array();
-        for(var i = 0; i<locs.length; i++){
-            signals.push(i+1);
-        }
-
-        var locs = [8, 4, 1];
-
-        var sortedlist = new Array();
-        var smallest = locs[0];
-        for(var j=0; j<locs.length; j++){
-            var index = 0;
-            for(var k=j; k<locs.length; k++){
-                if(locs[k] < smallest){
-                    smallest = locs[k];
-                    index = k;
-                }
-            }
-            locs[index] = locs[0];
-            locs[0] = smallest; 
-            sortedlist.push(smallest);
-        }
-        
-    //}
-}
-
-PreemptionCompletionListner.prototype.Sort(items)
-{
-    if (items.Length <= 1)
-    {
-        return;
-    }
- 
-    var leftSize = items.Length / 2;
-    var rightSize = items.Length - leftSize;
- 
-    var left = items.slice(0, leftSize);//new Array(leftSize);
-    var right = items.slice(leftSize, rightSize);//new Array(rightSize);
-    //left = left[]
-    //Array.Copy(items, 0, left, 0, leftSize);
-    //Array.Copy(items, leftSize, right, 0, rightSize);
- 
-    Sort(left);
-    Sort(right);
-    Merge(items, left, right);
-}
- 
-PreemptionCompletionListner.prototype.Merge(items, left, right, signals)
-{
-    var leftIndex = 0;
-    var rightIndex = 0;
-    var targetIndex = 0;
- 
-    var remaining = left.Length + right.Length;
- 
-    while(remaining > 0)
-    {
-        if (leftIndex >= left.Length)
-        {
-            items[targetIndex] = right[rightIndex++];
-        }
-        else if (rightIndex >= right.Length)
-        {
-            items[targetIndex] = left[leftIndex++];
-        }
-        else if (left[leftIndex].CompareTo(right[rightIndex]) < 0)
-        {
-            items[targetIndex] = left[leftIndex++];
-        }
-        else
-        {
-            items[targetIndex] = right[rightIndex++];
-        }
- 
-        targetIndex++;
-        remaining--;
-    }
+PreemptionRequest.prototype.cb = function(data){
+  console.log('runnning');
+  console.log(data);
 }
 
 PreemptionRequest.prototype.execute_request = function(){
@@ -145,6 +105,5 @@ PreemptionRequest.prototype.register_to_observer = function(){
     PreemptionCompletionListner.getInstance().addObserver(this);
     console.log("Registering to observer");
 };
-
 
 module.exports = PreemptionRequest;
