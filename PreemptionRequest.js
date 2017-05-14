@@ -35,7 +35,7 @@ PreemptionRequest.prototype.notify = function(traffic_id){
     }
 };
 
-PreemptionRequest.prototype.update = function(location, request){
+PreemptionRequest.prototype.update = function(location, request, socket){
 
     var that = this;
     var req_obj = request;
@@ -46,7 +46,7 @@ PreemptionRequest.prototype.update = function(location, request){
       console.log(v);
       that.locations.push(v[0]);
       console.log("LENGTH : " + that.locations.length);
-      if(that.locations.length > 4){
+      if(that.locations.length == 5){
         TrafficSignalManager.getInstance().get_signal(v[0]).then(function(result){
           console.log("get_signal resolved " + result);
 
@@ -57,6 +57,8 @@ PreemptionRequest.prototype.update = function(location, request){
           qManager.addRequest(req_obj);
           //send a response to the phone its successful
           console.log("REQUEST IS BEING ADDED TO QUEUE!");
+          socket.emit("AUTHORIZED");
+
 
         }).catch(function(result){
           console.log("ERR : " + result);

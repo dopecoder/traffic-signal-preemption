@@ -49,7 +49,6 @@ var PreemptionRequestHandler = (function(){
                 //respond with the key generated.
                 console.log('authorized with key : ' + key);
                 return key;
-
             }
         }
 
@@ -68,14 +67,14 @@ var PreemptionRequestHandler = (function(){
 
     }
 
-    Singleton.prototype.onLocationChanged = function(Request){
+    Singleton.prototype.onLocationChanged = function(Request, socket){
         console.log(Request);
         for(var request_key of this.request_key_list){
             if(request_key == Request.authentication_data){
                 var request = this.request_list[request_key];
                 var location = new Location(Request.direction_data.latitude, Request.direction_data.longitude);
                 request.direction_data = Request.direction_data;
-                request.update(location, Request);
+                request.update(location, Request, socket);
             }
         }
     }
