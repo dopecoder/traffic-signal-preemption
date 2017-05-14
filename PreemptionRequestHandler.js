@@ -55,10 +55,10 @@ var PreemptionRequestHandler = (function(){
     }
 
     Singleton.prototype.onRegister = function(Request){
-      console.log(Request);
+      //console.log(Request);
         for(var request_key of this.request_key_list){
             if(request_key == Request.authentication_data){
-                console.log(Request.direction_data);
+                //console.log(Request.direction_data);
                 this.request_list[request_key] = Request;
                 return true;
             }
@@ -68,7 +68,7 @@ var PreemptionRequestHandler = (function(){
     }
 
     Singleton.prototype.onLocationChanged = function(Request, socket){
-        console.log(Request);
+        //console.log(Request);
         for(var request_key of this.request_key_list){
             if(request_key == Request.authentication_data){
                 var request = this.request_list[request_key];

@@ -2,8 +2,8 @@ var LinkedList = require('./DoublyLinkedList.js');
 var QueueManager = require('./QueueManager.js');
 var TrafficSignalManager = require('./TrafficSignalManager.js');
 
-console.log("Yaay! " + QueueManager);
-console.log("Yaay2! " + TrafficSignalManager);
+//console.log("Yaay! " + QueueManager);
+//console.log("Yaay2! " + TrafficSignalManager);
 
 var PreemptionCompletionListner = (function () {
     "use strict";
@@ -24,10 +24,10 @@ var PreemptionCompletionListner = (function () {
     }
 
     Singleton.prototype.addObserver = function(Request){
-        console.log(Request);
+        //console.log(Request);
         this.observer_list.addFront(Request);
-        console.log("Running addObserver");
-        console.log(this.observer_list.get_size());
+        //console.log("Running addObserver");
+        //console.log(this.observer_list.get_size());
         //if(QueueManager.getInstance().seekLastElement(Request.traffic_id) == null){
         //    this.onResponse({traffic_id:Request.traffic_id});
         //}
@@ -38,11 +38,11 @@ var PreemptionCompletionListner = (function () {
     }
 
     Singleton.prototype.onResponse = function(response){
-        console.log("onResponse called with traffic id : " + response.traffic_id);
+        console.log("onResponse called with traffic id : " + response.id);
         console.log(this.observer_list.get_size());
         this.temp = this.observer_list.head;
         while(this.temp){
-            this.temp.data.notify(response.traffic_id);
+            this.temp.data.notify(response);
             this.temp = this.temp.next;
         }
     }

@@ -12,7 +12,7 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
         //console.log(final_url);
 
 
-        console.log('SIGNAL : '+ signals);
+        //console.log('SIGNAL : '+ signals);
         //console.log('MAIN : ' + signal.points[0][0]);
         var pointsarr = new Array();
 
@@ -38,7 +38,7 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
           var final_url = url+origins+destination+'&key='+API_KEY;
           final_urls.push(final_url);
         }
-        console.log('URLS : ' +final_urls);
+        //console.log('URLS : ' +final_urls);
         var client = new Client();
         // direct way
 
@@ -46,16 +46,16 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
           var sum = 0;
           var returns = new Array();
           for(var final_url of final_urls){
-            console.log(final_url.substr(base_url.length));
+            //console.log(final_url.substr(base_url.length));
             returns.push(final_url.substr(base_url.length));
           }
           var counter = 0;
           for(var final_url of final_urls){
             client.get(final_url, function (data, response) {
                 // parsed response body as js object
-                console.log(data);
+                //console.log(data);
                 counter=counter+1;
-                console.log(response['socket']['_httpMessage']['path']);
+                //console.log(response['socket']['_httpMessage']['path']);
                 var res = response['socket']['_httpMessage']['path'];
                 for(var row of data["rows"]){
                   var elements = row["elements"];
@@ -72,7 +72,7 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
                 //console.log(sum);
                 //returns.push(sum);
                 if(counter == final_urls.length){
-                  console.log("RETURNS : " + returns);
+                  //console.log("RETURNS : " + returns);
                   resolve(returns);
                 }
                 //console.log(response['_httpMessage']['path']);
@@ -85,7 +85,7 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
                 //console.log(response);
             });
           }
-          console.log("HEREEEEE : " + returns);
+          //console.log("HEREEEEE : " + returns);
           //resolve(returns);
 
           // Only `delay` is able to resolve or reject the promise
@@ -98,9 +98,9 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
 }
 
 Location.prototype.get_nearest = function(TrafficSignalManager){
-  console.log(TrafficSignalManager);
+  //console.log(TrafficSignalManager);
   var signals = TrafficSignalManager.getInstance().get_all_signals();
-  console.log(signals);
+  //console.log(signals);
   var arr = new Array();
   var signalArr = new Array();
   for(var signal of signals){
@@ -113,7 +113,7 @@ Location.prototype.get_nearest = function(TrafficSignalManager){
     }
 
   }
-  console.log(signalArr);
+  //console.log(signalArr);
   //console.log("ARR");
   //console.log(arr);
   //var sortedarr = this.sort_distances(arr, signalArr);
@@ -131,12 +131,12 @@ Location.prototype.get_nearest = function(TrafficSignalManager){
 
   return new Promise(function(resolve, reject) {
     cd.get_distance(cd.latitude, cd.longitude, signals).then(function(v) {
-        console.log("get_distance resolved : " + v);
+        //console.log("get_distance resolved : " + v);
         var sorted_signals = cd.sort_distances(v, signalArr);
         //TrafficSignalManager.getInstance().get_signal(sorted_signals[0]).then(function(v){
         resolve(sorted_signals);
     }).catch(function(v){
-        console.log('ERROR : ' + v);
+        //console.log('ERROR : ' + v);
     });
   });
   //});

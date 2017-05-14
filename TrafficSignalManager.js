@@ -57,12 +57,12 @@ var TrafficSignalManager = (function(){
 
     Singleton.prototype.init_traffic_signals = function(cb){
         //retrieve from mongodb
-      console.log("THIS : " + this.traffic_signals);
+      //console.log("THIS : " + this.traffic_signals);
       cb = this;
       TrafficSignalModel.find(function(err, signals) {
 			     if (err)
 				       res.send(err);
-           console.log("INITIALIZED : " + signals[0]);
+           //console.log("INITIALIZED : " + signals[0]);
            //console.log(this);
 			     //this.traffic_signals = signals; //TODO : change it to JSON.parse(signals) for development with json
            cb.traffic_signals = signals;
@@ -97,12 +97,12 @@ var TrafficSignalManager = (function(){
           /*f(this.traffic_signals == null){
             this.traffic_signals = new  Array();
           }*/
-          console.log("SIGNALS " + signals);
+          //console.log("SIGNALS " + signals);
           //this.traffic_signals = JSON.parse(signals);
           for(var signal of signals){
-            console.log('comparing '+ signal._id + ' with ' + id);
+            //console.log('comparing '+ signal._id + ' with ' + id);
             if(signal._id.toString() == id){
-              console.log("Ya "+ signal)
+              //console.log("Ya "+ signal)
               //cb.signal = signal;
               //callback(signal)
               resolve(signal);
