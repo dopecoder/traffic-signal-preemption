@@ -12,6 +12,7 @@ var PreemptionRequest = function(_id, traffic_id, authentication_data, direction
     this.direction_data = direction_data;
     this.authentication_data = authentication_data;
     this.locations = new Array();
+    this.locationUpdates = new Array();
     //this.no_of_locations = 0;
 }
 
@@ -30,6 +31,7 @@ PreemptionRequest.prototype.notify = function(request){
             QueueManager.getInstance().popRequest(request.id)
             //execute itself.
             this.execute_request();
+            //socket.emit("green_light", {id:request.id, side:request.side+1});
 	          console.log("executing request with id : " + request.id + " on side : " + request.side+1);
             //TrafficSignalManager.getInstance.notify_signal();
         }
@@ -38,16 +40,25 @@ PreemptionRequest.prototype.notify = function(request){
 
 PreemptionRequest.prototype.update = function(location, request, socket){
 
+    console.log("Request object in update: ");
+    console.log(request);
+
     var that = this;
     var req_obj = request;
     console.log('called update');
+    this.locationUpdates.push(request.direction_data);
+    if(this.locationUpdates.length == 10){
+      console.log("Run the analyzer now!");
+    }
     //update the variables
+    //location.getNearestSingalFromAllPointsAndReturnTheRightSignalAndSide;
+
     location.get_nearest(TrafficSignalManager).then(function(v){
       console.log("get_nearest is resolved "+ v);
       //console.log(v);
       that.locations.push(v[0]);
       console.log("LENGTH : " + that.locations.length);
-      if(that.locations.length == 5){
+      if(that.locations.length == 10){
         TrafficSignalManager.getInstance().get_signal(v[0]).then(function(result){
           console.log("get_signal resolved " + result);
 
@@ -59,13 +70,12 @@ PreemptionRequest.prototype.update = function(location, request, socket){
           //send a response to the phone its successful
           console.log("REQUEST IS BEING ADDED TO QUEUE!");
           //send the client that the request has been authorized
-          socket.emit("AUTHORIZED", result);
-
-
+          setTimeout(socket.emit("AUTHORIZED", result), 100);
         }).catch(function(result){
           console.log("ERR : " + result);
         });
-
+        console.log(this.locations.length);
+        console.log(this._id);
       }
 
       //this.locations.push(signal);

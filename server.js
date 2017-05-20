@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
 
   console.log('ON CONECTION');
-  socket.emit('connected');
+  socket.emit('onConnected');
 
   socket.on('authorize', function (data) {
     console.log('ON AUTHORIZE');
@@ -49,7 +49,6 @@ io.on('connection', function (socket) {
     setTimeout(function(){
       socket.emit('on_registration', {status:resStatus});
     }, 2000);
-
   });
 
   socket.on('location_changed', function (data) {
@@ -70,6 +69,9 @@ io.on('connection', function (socket) {
     //convert json to objrcts
     //handler.onLocationChanged(req, socket);
     PreemptionCompletionListner.getInstance().onResponse(data);
+    //turn signal green
+    console.log(data.id);
+    io.emit('green_signal', {id:data.id, side:data.side+1});
   });
 
   socket.on('end_signal', function (data) {
@@ -81,6 +83,9 @@ io.on('connection', function (socket) {
     //handler.onLocationChanged(req, socket);
     //PreemptionCompletionListner.getInstance().onResponse(data);
     console.log("Turn lights red");
+    //turn signal red
+    console.log(data.id);
+    io.emit('red_signal', {id:data.id, side:data.side+1});
   });
 
 

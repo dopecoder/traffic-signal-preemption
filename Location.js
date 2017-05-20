@@ -7,24 +7,11 @@ var Location = function(latitude, longitude){
 }
 
 Location.prototype.get_distance = function(src_latitude, src_longitude, signals){
-        //console.log('src_latitude ' + src_latitude + ' src_longitude ' + src_longitude + ' dest_latitude ' + dest_latitude + ' dest_longitude ' + dest_longitude);
-
-        //console.log(final_url);
-
-
-        //console.log('SIGNAL : '+ signals);
-        //console.log('MAIN : ' + signal.points[0][0]);
         var pointsarr = new Array();
 
         for(var signal of signals){
-          //console.log('SIGNAL : '+ signal);
-          //console.log('MAIN : ' + signal.points[0][0]);
-          //var arr = new Array();
           for(var i=0; i<signal.points.length;i++){
-            //console.log("POINT : " + point);
-            //signalArr.push(signal._id);
             pointsarr.push([signal.points[i][0], signal.points[i][1]]);
-
           }
         }
 
@@ -67,32 +54,13 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
                       returns[i] = row["elements"][0]["distance"]["value"];
                     }
                   }
-                  //returns.push(row["elements"][0]["distance"]["value"]);
                 }
-                //console.log(sum);
-                //returns.push(sum);
                 if(counter == final_urls.length){
                   //console.log("RETURNS : " + returns);
                   resolve(returns);
                 }
-                //console.log(response['_httpMessage']['path']);
-                //callback(signalArr, arr);
-                //console.log('SUM ' + sum);
-                //console.log(arr);
-                //arr.push(sum);
-
-                // raw response
-                //console.log(response);
             });
           }
-          //console.log("HEREEEEE : " + returns);
-          //resolve(returns);
-
-          // Only `delay` is able to resolve or reject the promise
-
-          /*setTimeout(function() {
-          resolve(42); // After 3 seconds, resolve the promise with value 42
-        }, 3000);*/
         });
 
 }
@@ -111,21 +79,7 @@ Location.prototype.get_nearest = function(TrafficSignalManager){
       //console.log("POINT : " + point);
       signalArr.push(signal._id);
     }
-
   }
-  //console.log(signalArr);
-  //console.log("ARR");
-  //console.log(arr);
-  //var sortedarr = this.sort_distances(arr, signalArr);
-  //return sortedarr[0];
-  /*this.get_distance(this.latitude, this.longitude, signals).then(function(v) {
-      console.log("GOT ARRAY OF DISTANCES : " + v);
-      //var sorted_signals = this.sort_distances(v, signalArr);
-      //TrafficSignalManager.getInstance().get_signal(sorted_signals[0]).then(function(v){
-      //resolve(v);
-  }).catch(function(v){
-      console.log('ERROR : ' + v);
-  });*/
 
   var cd = this;
 
@@ -139,15 +93,7 @@ Location.prototype.get_nearest = function(TrafficSignalManager){
         //console.log('ERROR : ' + v);
     });
   });
-  //});
 }
-/*
-Location.prototype.got_distances = function(data){
-  console.log("ARR");
-  console.log(arr);
-  var sortedarr = this.sort_distances(arr, signalArr);
-  return sortedarr[0];
-}*/
 
 Location.prototype.sort_distances = function(arr, signalArr){
   var arr = this.quickSort(arr, signalArr, 0, arr.length - 1);
@@ -170,7 +116,6 @@ Location.prototype.partition = function(items, left, right, signal_array) {
     i = left,
     j = right;
 
-
     while (i <= j) {
 
         while (items[i] < pivot) {
@@ -187,7 +132,6 @@ Location.prototype.partition = function(items, left, right, signal_array) {
             j--;
         }
     }
-
     return i;
 }
 
