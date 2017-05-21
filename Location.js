@@ -157,6 +157,7 @@ Location.prototype.get_correct_signal = function(TrafficSignalManager, locations
   for(var signal of signals){
     for(var i=0; i<signal.points.length;i++){
       //console.log("POINT : " + point);
+      console.log(signal._id);
       signalArr.push(signal._id);
     }
   }
