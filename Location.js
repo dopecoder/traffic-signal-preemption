@@ -12,7 +12,7 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
 
         for(var signal of signals){
           for(var i=0; i<signal.points.length;i++){
-            pointsarr.push(signal.points[i]);
+            pointsarr.push([signal.points[i][0], signal.points[i][1]]);
           }
         }
 
@@ -62,90 +62,6 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
           }
         });
 }
-
-/*Location.prototype.get_nearest = function(TrafficSignalManager, locations){
-
-  var distances = new Array();
-  var src_lat = this.latitude;
-  var src_lon = this.longitude;
-
-  var signals = TrafficSignalManager.getInstance().get_all_signals();
-  //console.log(signals);
-  var arr = new Array();
-  var signalArr = new Array();
-  for(var signal of signals){
-    for(var i=0; i<signal.points.length;i++){
-      //console.log("POINT : " + point);
-      signalArr.push(signal._id);
-    }
-  }
-
-  function getSmallest(arr){
-    var smallest = arr[0];
-    var smallestIndex = 0;
-    for(var i=1; i<arr.length; i++){
-      if(arr[i] < smallest){
-        var smallest = arr[i];
-        var smallestIndex = i;
-      }
-    }
-    return smallestIndex;
-  }
-
-  function isNegative(num){
-    if (num < 0) {
-      return true;
-    }
-    return false;
-  }
-
-  var cd = this;
-
-  return new Promise(function(resolve, reject) {
-    var delta = new Array();
-    var indexcounter = new Array();
-
-    cd.get_distance(src_lat, src_lon, signals).then(function(v) {
-        console.log("get_distance resolved : " + v);
-        distances.push(v);
-        var sorted_signals = cd.sort_distances(v, signalArr);
-        //TrafficSignalManager.getInstance().get_signal(sorted_signals[0]).then(function(v){
-	console.log("DISTANCES LENGTH : ");
-	console.log(distances.length);
-	console.log("MIN_LOCATIONS LENGTH : ");
-	console.log(MIN_LOCATIONS);
-        if (distances.length == MIN_LOCATIONS) {
-          //calculate delta
-          var arr; // = new Array();
-          for(var i=1; i<distances.length; i++){
-            arr = new Array();
-            var distanceToAllSignalPoints = distances[i];
-            var distanceToPreviousSignalPoints = distances[i-1];
-            var smallestToAllSignalPoints = getSmallest(distanceToAllSignalPoints);
-            var smallestToPreviousSignalPoints = getSmallest(distanceToAllSignalPoints);
-
-            for(var j = 0; j < distances[i].length; j++){
-              arr.push(distanceToAllSignalPoints[j] - distanceToPreviousSignalPoints[j]);
-            }
-            if(isNegative(arr[smallestToAllSignalPoints])){
-                indexcounter.push(smallestToAllSignalPoints);
-            }
-            delta.push(arr);
-          }
-	         console.log("COUNTERS : ");
-          console.log(indexcounter);
-          resolve(sorted_signals);
-          //go through each in distance array to get the smallest (negetive most delta) and log the index
-          //go through each in delta array and check if the i has -ve delta, if push it to occurance array
-          //in occurance array add the count to every point and return that signal.
-        }
-        //resolve(sorted_signals);
-    }).catch(function(v){
-        console.log('ERROR : ' + v);
-    });
-  });
-}*/
-
 Location.prototype.get_correct_signal = function(TrafficSignalManager, locations){
   //var src_lat = this.latitude;
   //var src_lon = this.longitude;

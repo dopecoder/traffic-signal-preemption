@@ -15,6 +15,7 @@ var PreemptionCompletionListner = (function () {
         }
         instance = this;
         //Singleton initialization code
+        //this.socket = null;
         this.observer_list = new LinkedList();
     }
 
@@ -22,6 +23,11 @@ var PreemptionCompletionListner = (function () {
     Singleton.getInstance = function () {
         return instance || new Singleton();
     }
+
+    /*
+    Singleton.prototype.setsocketObject = function(socket){
+        this.socket = socket;
+    }*/
 
     Singleton.prototype.addObserver = function(Request){
         //console.log(Request);
