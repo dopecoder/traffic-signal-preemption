@@ -30,25 +30,43 @@ var TrafficSignalManager = (function(){
     Singleton.prototype.Init_For_Once = function(){
         var signal1 = new TrafficSignalModel({
             no_of_points : 3,
-            points : [[12.928964, 77.586075], [12.928614, 77.586483], [12.928339, 77.586146]]
+            points : [{location:[12.928964, 77.586075], id:''}, {location:[12.928614, 77.586483], id:''}, {location:[12.928339, 77.586146], id:''}]
         })
-        signal1.save(function(err){
+        signal1.save(function(err, signal){
             if(err){
                 console.log(err);
             }else{
                 console.log("signal1 saved!");
+                for(var i=0; i<signal1.points.length; i++){
+                  signal1.points[i].id = signal._id;
+                }
+                signal1.save(function(err, signal){
+                  if(err)
+                    console.log(err);
+
+                  console.log("Signal1 updated.");
+                });
             }
         });
 
         var signal2 = new TrafficSignalModel({
             no_of_points : 3,
-            points : [[12.928639, 77.584127], [12.928315, 77.583676], [12.928671, 77.583451]]
+            points : [{location:[12.928639, 77.584127], id:''}, {location:[12.928315, 77.583676], id:''}, {location:[12.928671, 77.583451], id:''}]
         })
-        signal2.save(function(err){
+        signal2.save(function(err, signal){
             if(err){
                 console.log(err);
             }else{
                 console.log("signal2 saved!");
+                for(var i=0; i<signal2.points.length; i++){
+                  signal2.points[i].id = signal._id;
+                }
+                signal2.save(function(err, signal){
+                  if(err)
+                    console.log(err);
+
+                  console.log("Signal2 updated.");
+                });
             }
         });
 

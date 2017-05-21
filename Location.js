@@ -1,5 +1,6 @@
 var Client = require('node-rest-client').Client;
 var API_KEY = 'AIzaSyBGdGBTzAqSxZ4rNH_rReF6TWVLgQNDEsA';
+const MIN_LOCATIONS = 10;
 
 var Location = function(latitude, longitude){
     this.latitude = latitude;
@@ -7,24 +8,11 @@ var Location = function(latitude, longitude){
 }
 
 Location.prototype.get_distance = function(src_latitude, src_longitude, signals){
-        //console.log('src_latitude ' + src_latitude + ' src_longitude ' + src_longitude + ' dest_latitude ' + dest_latitude + ' dest_longitude ' + dest_longitude);
-
-        //console.log(final_url);
-
-
-        //console.log('SIGNAL : '+ signals);
-        //console.log('MAIN : ' + signal.points[0][0]);
         var pointsarr = new Array();
 
         for(var signal of signals){
-          //console.log('SIGNAL : '+ signal);
-          //console.log('MAIN : ' + signal.points[0][0]);
-          //var arr = new Array();
           for(var i=0; i<signal.points.length;i++){
-            //console.log("POINT : " + point);
-            //signalArr.push(signal._id);
-            pointsarr.push([signal.points[i][0], signal.points[i][1]]);
-
+            pointsarr.push(signal.points[i]);
           }
         }
 
@@ -34,7 +22,7 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
         var origins = '&origins=' + src_latitude+','+src_longitude;
 
         for(var i=0; i<pointsarr.length; i++){
-          var destination = '&destinations=' + pointsarr[i][0]+','+pointsarr[i][1];
+          var destination = '&destinations=' + pointsarr[i].location[0]+','+pointsarr[i].location[1];
           var final_url = url+origins+destination+'&key='+API_KEY;
           final_urls.push(final_url);
         }
@@ -46,7 +34,6 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
           var sum = 0;
           var returns = new Array();
           for(var final_url of final_urls){
-            //console.log(final_url.substr(base_url.length));
             returns.push(final_url.substr(base_url.length));
           }
           var counter = 0;
@@ -67,87 +54,195 @@ Location.prototype.get_distance = function(src_latitude, src_longitude, signals)
                       returns[i] = row["elements"][0]["distance"]["value"];
                     }
                   }
-                  //returns.push(row["elements"][0]["distance"]["value"]);
                 }
-                //console.log(sum);
-                //returns.push(sum);
                 if(counter == final_urls.length){
-                  //console.log("RETURNS : " + returns);
-                  resolve(returns);
+                  resolve({distances:returns, points:pointsarr});
                 }
-                //console.log(response['_httpMessage']['path']);
-                //callback(signalArr, arr);
-                //console.log('SUM ' + sum);
-                //console.log(arr);
-                //arr.push(sum);
-
-                // raw response
-                //console.log(response);
             });
           }
-          //console.log("HEREEEEE : " + returns);
-          //resolve(returns);
-
-          // Only `delay` is able to resolve or reject the promise
-
-          /*setTimeout(function() {
-          resolve(42); // After 3 seconds, resolve the promise with value 42
-        }, 3000);*/
         });
-
 }
 
-Location.prototype.get_nearest = function(TrafficSignalManager){
-  //console.log(TrafficSignalManager);
+/*Location.prototype.get_nearest = function(TrafficSignalManager, locations){
+
+  var distances = new Array();
+  var src_lat = this.latitude;
+  var src_lon = this.longitude;
+
   var signals = TrafficSignalManager.getInstance().get_all_signals();
   //console.log(signals);
   var arr = new Array();
   var signalArr = new Array();
   for(var signal of signals){
-    //console.log('SIGNAL : '+ signal);
-    //console.log('MAIN : ' + signal.points[0][0]);
-    //var arr = new Array();
     for(var i=0; i<signal.points.length;i++){
       //console.log("POINT : " + point);
       signalArr.push(signal._id);
     }
-
   }
-  //console.log(signalArr);
-  //console.log("ARR");
-  //console.log(arr);
-  //var sortedarr = this.sort_distances(arr, signalArr);
-  //return sortedarr[0];
-  /*this.get_distance(this.latitude, this.longitude, signals).then(function(v) {
-      console.log("GOT ARRAY OF DISTANCES : " + v);
-      //var sorted_signals = this.sort_distances(v, signalArr);
-      //TrafficSignalManager.getInstance().get_signal(sorted_signals[0]).then(function(v){
-      //resolve(v);
-  }).catch(function(v){
-      console.log('ERROR : ' + v);
-  });*/
+
+  function getSmallest(arr){
+    var smallest = arr[0];
+    var smallestIndex = 0;
+    for(var i=1; i<arr.length; i++){
+      if(arr[i] < smallest){
+        var smallest = arr[i];
+        var smallestIndex = i;
+      }
+    }
+    return smallestIndex;
+  }
+
+  function isNegative(num){
+    if (num < 0) {
+      return true;
+    }
+    return false;
+  }
 
   var cd = this;
 
   return new Promise(function(resolve, reject) {
-    cd.get_distance(cd.latitude, cd.longitude, signals).then(function(v) {
-        //console.log("get_distance resolved : " + v);
+    var delta = new Array();
+    var indexcounter = new Array();
+
+    cd.get_distance(src_lat, src_lon, signals).then(function(v) {
+        console.log("get_distance resolved : " + v);
+        distances.push(v);
         var sorted_signals = cd.sort_distances(v, signalArr);
         //TrafficSignalManager.getInstance().get_signal(sorted_signals[0]).then(function(v){
-        resolve(sorted_signals);
+	console.log("DISTANCES LENGTH : ");
+	console.log(distances.length);
+	console.log("MIN_LOCATIONS LENGTH : ");
+	console.log(MIN_LOCATIONS);
+        if (distances.length == MIN_LOCATIONS) {
+          //calculate delta
+          var arr; // = new Array();
+          for(var i=1; i<distances.length; i++){
+            arr = new Array();
+            var distanceToAllSignalPoints = distances[i];
+            var distanceToPreviousSignalPoints = distances[i-1];
+            var smallestToAllSignalPoints = getSmallest(distanceToAllSignalPoints);
+            var smallestToPreviousSignalPoints = getSmallest(distanceToAllSignalPoints);
+
+            for(var j = 0; j < distances[i].length; j++){
+              arr.push(distanceToAllSignalPoints[j] - distanceToPreviousSignalPoints[j]);
+            }
+            if(isNegative(arr[smallestToAllSignalPoints])){
+                indexcounter.push(smallestToAllSignalPoints);
+            }
+            delta.push(arr);
+          }
+	         console.log("COUNTERS : ");
+          console.log(indexcounter);
+          resolve(sorted_signals);
+          //go through each in distance array to get the smallest (negetive most delta) and log the index
+          //go through each in delta array and check if the i has -ve delta, if push it to occurance array
+          //in occurance array add the count to every point and return that signal.
+        }
+        //resolve(sorted_signals);
     }).catch(function(v){
-        //console.log('ERROR : ' + v);
+        console.log('ERROR : ' + v);
     });
   });
-  //});
-}
-/*
-Location.prototype.got_distances = function(data){
-  console.log("ARR");
-  console.log(arr);
-  var sortedarr = this.sort_distances(arr, signalArr);
-  return sortedarr[0];
 }*/
+
+Location.prototype.get_correct_signal = function(TrafficSignalManager, locations){
+  //var src_lat = this.latitude;
+  //var src_lon = this.longitude;
+
+  var signals = TrafficSignalManager.getInstance().get_all_signals();
+  //console.log(signals);
+  var arr = new Array();
+  var signalArr = new Array();
+  for(var signal of signals){
+    for(var i=0; i<signal.points.length;i++){
+      //console.log("POINT : " + point);
+      signalArr.push(signal._id);
+    }
+  }
+
+  function getSmallest(arr){
+    var smallest = arr[0];
+    var smallestIndex = 0;
+    for(var i=1; i<arr.length; i++){
+      if(arr[i] < smallest){
+        var smallest = arr[i];
+        var smallestIndex = i;
+      }
+    }
+    return smallestIndex;
+  }
+
+  function isNegative(num){
+    if (num < 0) {
+      return true;
+    }
+    return false;
+  }
+
+  var cd = this;
+
+  return new Promise(function(resolve, reject) {
+    var delta = new Array();
+    var indexcounter = new Array();
+    var distances = new Array();
+
+
+    for(var i=0; i<locations.length; i++){
+	     var src_lat = locations[i].latitude;
+  	   var src_lon = locations[i].longitude;
+
+       cd.get_distance(src_lat, src_lon, signals).then(function(v) {
+        console.log("get_distance resolved : " + v);
+        distances.push(v.distances);
+        var sorted_signals = cd.sort_distances(v, signalArr);
+        //TrafficSignalManager.getInstance().get_signal(sorted_signals[0]).then(function(v){
+	       console.log("DISTANCES LENGTH : ");
+	       console.log(distances.length);
+	       console.log(distances);
+	       console.log("MIN_LOCATIONS LENGTH : ");
+	       console.log(MIN_LOCATIONS);
+        if (distances.length == MIN_LOCATIONS) {
+          //calculate delta
+          var arr; // = new Array();
+          for(var i=1; i<distances.length; i++){
+            arr = new Array();
+            var distanceToAllSignalPoints = distances[i];
+            var distanceToPreviousSignalPoints = distances[i-1];
+            var smallestToAllSignalPoints = getSmallest(distanceToAllSignalPoints);
+            var smallestToPreviousSignalPoints = getSmallest(distanceToAllSignalPoints);
+
+            for(var j = 0; j < distances[i].length; j++){
+              arr.push(distanceToAllSignalPoints[j] - distanceToPreviousSignalPoints[j]);
+            }
+            if(isNegative(arr[smallestToAllSignalPoints])){
+                indexcounter.push(smallestToAllSignalPoints);
+            }
+            delta.push(arr);
+          }
+	         console.log("DELTA : ");
+           console.log(delta);
+	         console.log("COUNTERS : ");
+           console.log(indexcounter);
+           console.log(v.points);
+	         console.log(v.points[indexcounter[indexcounter.length - 1]]);
+          //resolve(v.points[indexcounter[indexcounter.length - 1]]);
+          for(var i = 0; i<signals.length; i++){
+            if (signals[i]._id == v.points[indexcounter[indexcounter.length - 1]].id) {
+              resolve(signals[i]);
+            }
+          }
+          //go through each in distance array to get the smallest (negetive most delta) and log the index
+          //go through each in delta array and check if the i has -ve delta, if push it to occurance array
+          //in occurance array add the count to every point and return that signal.
+        }
+        //resolve(sorted_signals);
+    }).catch(function(v){
+        console.log('ERROR : ' + v);
+    });
+    }
+  });
+}
 
 Location.prototype.sort_distances = function(arr, signalArr){
   var arr = this.quickSort(arr, signalArr, 0, arr.length - 1);
@@ -170,24 +265,19 @@ Location.prototype.partition = function(items, left, right, signal_array) {
     i = left,
     j = right;
 
-
     while (i <= j) {
-
         while (items[i] < pivot) {
             i++;
         }
-
         while (items[j] > pivot) {
             j--;
         }
-
         if (i <= j) {
             this.swap(items, i, j, signal_array);
             i++;
             j--;
         }
     }
-
     return i;
 }
 
@@ -200,19 +290,15 @@ Location.prototype.quickSort = function(items, signal_array, left, right) {
         left = typeof left != "number" ? 0 : left;
         right = typeof right != "number" ? items.length - 1 : right;
 
-
         index = this.partition(items, left, right, signal_array);
 
         if (left < index - 1) {
             this.quickSort(items, left, index - 1, signal_array);
         }
-
         if (index < right) {
             this.quickSort(items, index, right, signal_array);
         }
-
     }
-
     console.log('signal_array ' + signal_array);
     return signal_array;
 }

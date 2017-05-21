@@ -5,7 +5,7 @@ var TrafficSignalManager = require('./TrafficSignalManager.js');
 var express   = require('express');
 var app       = express();
 
-
+//TrafficSignalManager.getInstance().Init_For_Once();
 TrafficSignalManager.getInstance().init_traffic_signals();
 var handler = PreemptionRequestHandler.getInstance();
 console.log(handler);
@@ -61,27 +61,34 @@ io.on('connection', function (socket) {
     handler.onLocationChanged(req, socket);
   });
 
-
   socket.on('near_signal', function (data) {
-    console.log('NEAR_SIGNAL');
-    //console.log(data);
-    //var res = JSON.parse(data);
-    //var req = new PreemptionRequest(res._id, res.traffic_id, res.authentication_data, res.direction_data);
-    //convert json to objrcts
-    //handler.onLocationChanged(req, socket);
-    PreemptionCompletionListner.getInstance().onResponse(data);
-  });
+      console.log('NEAR_SIGNAL');
+      //console.log(data);
+      //var res = JSON.parse(data);
+      //var req = new PreemptionRequest(res._id, res.traffic_id, res.authentication_data, res.direction_data);
+      //convert json to objrcts
+      //handler.onLocationChanged(req, socket);
+      PreemptionCompletionListner.getInstance().onResponse(data);
+      //turn signal green
+      console.log(data.id);
+      io.emit('green_signal', {id:data.id, side:data.side+1});
+    });
 
-  socket.on('end_signal', function (data) {
-    console.log('END_SIGNAL');
-    //console.log(data);
-    //var res = JSON.parse(data);
-    //var req = new PreemptionRequest(res._id, res.traffic_id, res.authentication_data, res.direction_data);
-    //convert json to objrcts
-    //handler.onLocationChanged(req, socket);
-    //PreemptionCompletionListner.getInstance().onResponse(data);
-    console.log("Turn lights red");
-  });
+    socket.on('end_signal', function (data) {
+      console.log('END_SIGNAL');
+      //console.log(data);
+      //var res = JSON.parse(data);
+      //var req = new PreemptionRequest(res._id, res.traffic_id, res.authentication_data, res.direction_data);
+      //convert json to objrcts
+      //handler.onLocationChanged(req, socket);
+      //PreemptionCompletionListner.getInstance().onResponse(data);
+      console.log("Turn lights red");
+      //turn signal red
+      console.log(data.id);
+      setTimeout(function(){
+        io.emit('red_signal', {id:data.id, side:data.side+1});
+      }, 2500);
+    });
 
 
 

@@ -1,0 +1,1011 @@
+<html>
+ <head>
+   <title>EVP DEMO</title>
+   <style>
+    #container{
+      position: absolute;
+      top: 5%;
+      left: 5%;
+    }
+    #d1container{
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      visibility: hidden;
+    }
+    #d2container{
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      visibility: hidden;
+    }
+    #d3container{
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      visibility: hidden;
+    }
+    #d4container{
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      visibility: hidden;
+    }
+
+   .signal{
+       width: 200px;
+       height: 600px;
+       float: left;
+       border-style: solid;
+       border-width: 15px;
+       border-color: black;
+       background-color: #D3D3D3;
+    }
+
+   #s1{
+
+    }
+    #s2{
+        margin-left: 100px;
+   }
+    #s3{
+      margin-left: 100px;
+    }
+    #s4{
+      margin-left: 100px;
+    }
+    #d1s1{
+
+     }
+     #d1s2{
+         margin-left: 100px;
+    }
+     #d1s3{
+       margin-left: 100px;
+     }
+     #d1s4{
+       margin-left: 100px;
+     }
+     #d2s1{
+
+      }
+      #d2s2{
+          margin-left: 100px;
+     }
+      #d2s3{
+        margin-left: 100px;
+      }
+      #d2s4{
+        margin-left: 100px;
+      }
+      #d3s1{
+
+       }
+       #d3s2{
+           margin-left: 100px;
+      }
+       #d3s3{
+         margin-left: 100px;
+       }
+       #d3s4{
+         margin-left: 100px;
+       }
+       #d4s1{
+
+        }
+        #d4s2{
+            margin-left: 100px;
+       }
+        #d4s3{
+          margin-left: 100px;
+        }
+        #d4s4{
+          margin-left: 100px;
+        }
+
+    .light{
+      	width: 120px;
+	      height: 120px;
+       -moz-border-radius: 60px;
+	      -webkit-border-radius: 60px;
+	      border-radius: 60px;
+        border: 2px solid black;
+        margin-left: 40px;
+        margin-top: 20px;
+        background-color: black;
+    }
+
+    #s1r{
+    background-color: red;
+    }
+    #s2r{
+      background-color: red;
+    }
+    #s3r{
+      background-color: red;
+    }
+    #s4r{
+      background-color: black;
+    }
+    #s4g{
+      background-color: green;
+    }
+    #d1s1g{
+    background-color: green;
+    }
+    #d1s2r{
+      background-color: red;
+    }
+    #d1s3r{
+      background-color: red;
+    }
+    #d1s4r{
+      background-color: red;
+    }
+    #d1s4g{
+      background-color: black;
+    }
+
+    #d2s2g{
+    background-color: green;
+    }
+    #d2s2r{
+      background-color: black;
+    }
+    #d2s3r{
+      background-color: red;
+    }
+    #d2s4r{
+      background-color: red;
+    }
+    #d2s1r{
+      background-color: red;
+    }
+
+    #d3s3g{
+    background-color: green;
+    }
+    #d3s2r{
+      background-color: red;
+    }
+    #d3s1r{
+      background-color: red;
+    }
+    #d3s4r{
+      background-color: red;
+    }
+    #d3s3r{
+      background-color: black;
+    }
+
+    #d4s4g{
+    background-color: green;
+    }
+    #d4s2r{
+      background-color: red;
+    }
+    #d4s3r{
+      background-color: red;
+    }
+    #d4s1r{
+      background-color: red;
+    }
+    #d4s4r{
+      background-color: black;
+    }
+
+
+   </style>
+ </head>
+ <body>
+
+   <div id="container">
+
+    <div id="s1" class="signal">
+        <div style="text-align:center;"><h2>1</h2></div>
+
+      <div id="s1r" class="light" class="red">
+
+      </div>
+
+			<div id="s1y" class="light" class="yellow">
+
+			</div>
+
+      <div id="s1g" class="light" class="green">
+
+      </div>
+  </div>
+
+  <div id="s2" class="signal">
+
+      <div id="n2" style="text-align:center;"><h2>2</h2></div>
+
+      <div id="s2r" class="light" class="red">
+
+      </div>
+			<div id="s2y" class="light" class="yellow">
+
+			</div>
+
+      <div id="s2g" class="light" class="green">
+
+      </div>
+    </div>
+
+    <div id="s3" class="signal">
+
+      <div style="text-align:center;"><h2>3</h2></div>
+      <div id="s3r" class="light" class="red">
+
+      </div>
+			<div id="s3y" class="light" class="yellow">
+
+			</div>
+
+      <div id="s3g" class="light" class="green">
+
+      </div>
+    </div>
+
+    <div id="s4" class="signal">
+
+      <div style="text-align:center;"><h2>4</h2></div>
+
+      <div id="s4r" class="light" class="red">
+
+      </div>
+			<div id="s4y" class="light" class="yellow">
+
+			</div>
+
+      <div id="s4g" class="light" class="green">
+
+      </div>
+    </div>
+
+</div>
+
+<div id="d1container">
+
+ <div id="d1s1" class="signal">
+     <div style="text-align:center;"><h2>1</h2></div>
+
+   <div id="d1s1r" class="light" class="dred">
+
+   </div>
+
+   <div id="d1s1y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d1s1g" class="light" class="dgreen">
+
+   </div>
+</div>
+
+<div id="d1s2" class="signal">
+
+   <div id="d1n2" style="text-align:center;"><h2>2</h2></div>
+
+   <div id="d1s2r" class="light" class="dred">
+
+   </div>
+   <div id="d1s2y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d1s2g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d1s3" class="signal">
+
+   <div style="text-align:center;"><h2>3</h2></div>
+   <div id="d1s3r" class="light" class="dred">
+
+   </div>
+   <div id="d1s3y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d1s3g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d1s4" class="signal">
+
+   <div style="text-align:center;"><h2>4</h2></div>
+
+   <div id="d1s4r" class="light" class="dred">
+
+   </div>
+   <div id="d1s4y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d1s4g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+</div>
+
+
+<div id="d2container">
+
+ <div id="d2s1" class="signal">
+     <div style="text-align:center;"><h2>1</h2></div>
+
+   <div id="d2s1r" class="light" class="dred">
+
+   </div>
+
+   <div id="d2s1y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d2s1g" class="light" class="dgreen">
+
+   </div>
+</div>
+
+<div id="d2s2" class="signal">
+
+   <div id="d2n2" style="text-align:center;"><h2>2</h2></div>
+
+   <div id="d2s2r" class="light" class="dred">
+
+   </div>
+   <div id="d2s2y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d2s2g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d2s3" class="signal">
+
+   <div style="text-align:center;"><h2>3</h2></div>
+   <div id="d2s3r" class="light" class="dred">
+
+   </div>
+   <div id="d2s3y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d2s3g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d2s4" class="signal">
+
+   <div style="text-align:center;"><h2>4</h2></div>
+
+   <div id="d2s4r" class="light" class="dred">
+
+   </div>
+   <div id="d2s4y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d2s4g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+</div>
+
+
+<div id="d3container">
+
+ <div id="d3s1" class="signal">
+     <div style="text-align:center;"><h2>1</h2></div>
+
+   <div id="d3s1r" class="light" class="dred">
+
+   </div>
+
+   <div id="d3s1y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d3s1g" class="light" class="dgreen">
+
+   </div>
+</div>
+
+<div id="d3s2" class="signal">
+
+   <div id="d3n2" style="text-align:center;"><h2>2</h2></div>
+
+   <div id="d3s2r" class="light" class="dred">
+
+   </div>
+   <div id="d3s2y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d3s2g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d3s3" class="signal">
+
+   <div style="text-align:center;"><h2>3</h2></div>
+   <div id="d3s3r" class="light" class="dred">
+
+   </div>
+   <div id="d3s3y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d3s3g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d3s4" class="signal">
+
+   <div style="text-align:center;"><h2>4</h2></div>
+
+   <div id="d3s4r" class="light" class="dred">
+
+   </div>
+   <div id="d3s4y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d3s4g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+</div>
+
+
+<div id="d4container">
+
+ <div id="d4s1" class="signal">
+     <div style="text-align:center;"><h2>1</h2></div>
+
+   <div id="d4s1r" class="light" class="dred">
+
+   </div>
+
+   <div id="d4s1y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d4s1g" class="light" class="dgreen">
+
+   </div>
+</div>
+
+<div id="d4s2" class="signal">
+
+   <div id="d4n2" style="text-align:center;"><h2>2</h2></div>
+
+   <div id="d4s2r" class="light" class="dred">
+
+   </div>
+   <div id="d4s2y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d4s2g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d4s3" class="signal">
+
+   <div style="text-align:center;"><h2>3</h2></div>
+   <div id="d4s3r" class="light" class="dred">
+
+   </div>
+   <div id="d4s3y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d4s3g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+ <div id="d4s4" class="signal">
+
+   <div style="text-align:center;"><h2>4</h2></div>
+
+   <div id="d4s4r" class="light" class="dred">
+
+   </div>
+   <div id="d4s4y" class="light" class="dyellow">
+
+   </div>
+
+   <div id="d4s4g" class="light" class="dgreen">
+
+   </div>
+ </div>
+
+</div>
+
+
+
+<div>
+    <button onclick="startOp()">Start Operation</button>
+
+    <button onclick="clearInterval(start)">Stop Operation</button>
+</div>
+</body>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script
+			  src="https://code.jquery.com/jquery-2.2.3.min.js"
+			  integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
+			  crossorigin="anonymous"></script>
+
+<script>
+
+function startOp(){
+    start = setInterval(function(){
+      myFunction();
+    },20000);
+
+}
+
+function start(){
+  startOp();
+}
+
+function stop(){
+  stopOp();
+}
+
+var r1 = document.getElementById("s1r");
+var y1 = document.getElementById("s1y");
+var g1 = document.getElementById("s1g");
+var r2 = document.getElementById("s2r");
+var y2 = document.getElementById("s2y");
+var g2 = document.getElementById("s2g");
+var r3 = document.getElementById("s3r");
+var y3 = document.getElementById("s3y");
+var g3 = document.getElementById("s3g");
+var r4 = document.getElementById("s4r");
+var y4 = document.getElementById("s4y");
+var g4 = document.getElementById("s4g");
+var start;
+var stop=0;
+var x = document.getElementById("container");
+var a = document.getElementById("d1container");
+var b = document.getElementById("d2container");
+var c = document.getElementById("d3container");
+var d = document.getElementById("d4container");
+
+
+
+function myFunction() {
+
+  setTimeout(function(){
+    r1.style.backgroundColor='black';
+    y1.style.backgroundColor='black';
+    g1.style.backgroundColor='green';
+    r2.style.backgroundColor='red';
+    y2.style.backgroundColor='black';
+    g2.style.backgroundColor='black';
+    r3.style.backgroundColor='red';
+    y3.style.backgroundColor='black';
+    g3.style.backgroundColor='black';
+    r4.style.backgroundColor='red';
+    y4.style.backgroundColor='black';
+    g4.style.backgroundColor='black';
+ },1000);
+ setTimeout(function(){
+   r1.style.backgroundColor='black';
+   y1.style.backgroundColor='black';
+   g1.style.backgroundColor='green';
+   r2.style.backgroundColor='red';
+   y2.style.backgroundColor='black';
+   g2.style.backgroundColor='black';
+   r3.style.backgroundColor='red';
+   y3.style.backgroundColor='black';
+   g3.style.backgroundColor='black';
+   r4.style.backgroundColor='red';
+   y4.style.backgroundColor='black';
+   g4.style.backgroundColor='black';
+},2000);
+setTimeout(function(){
+  r1.style.backgroundColor='black';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='green';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},3000);
+setTimeout(function(){
+  r1.style.backgroundColor='black';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='green';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},4000);
+
+setTimeout(function(){
+  r1.style.backgroundColor='black';
+  y1.style.backgroundColor='yellow';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},5000);
+
+
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='black';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='green';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},6000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='black';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='green';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},7000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='black';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='green';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},8000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='black';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='green';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},9000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='black';
+  y2.style.backgroundColor='yellow';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},10000);
+
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='black';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='green';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},11000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='black';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='green';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},12000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='black';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='green';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},13000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='black';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='green';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},14000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='black';
+  y3.style.backgroundColor='yellow';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='red';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='black';
+},15000);
+
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='black';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='green';
+},16000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='black';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='green';
+},17000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='black';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='green';
+},18000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='black';
+  y4.style.backgroundColor='black';
+  g4.style.backgroundColor='green';
+},19000);
+setTimeout(function(){
+  r1.style.backgroundColor='red';
+  y1.style.backgroundColor='black';
+  g1.style.backgroundColor='black';
+  r2.style.backgroundColor='red';
+  y2.style.backgroundColor='black';
+  g2.style.backgroundColor='black';
+  r3.style.backgroundColor='red';
+  y3.style.backgroundColor='black';
+  g3.style.backgroundColor='black';
+  r4.style.backgroundColor='black';
+  y4.style.backgroundColor='yellow';
+  g4.style.backgroundColor='black';
+},20000);
+
+}
+
+function stopOp() {
+  stop=1;
+}
+
+var SIDE ;
+//var counters = [0, 0, 0, 0];
+var socket = io.connect('http://localhost:3033/');
+socket.on('getLocation', function (data) {
+  console.log('yaay!');
+  /*socket.emit('sendLocation', JSON.stringify({traffic_signal_id: 0, location:{lat:12.924945, lon:77.6333847},
+    key:'9e4207dacba9b1a2e4185a80ddb88271302db0501455d49d0539cf0a7ba52ba7'}));*/
+});
+
+socket.on('green_signal', function (data) {
+  //var jsonData = JSON.parse(data);
+  console.log('REQUEST TO GREEN');
+  var signal_id = '5921454f281b383466ace425';
+  if (signal_id != data.id) {
+    return;
+  }
+  var SIDE = data.side;
+  //counters[SIDE - 1] = counters[SIDE - 1]+1;
+
+  if(SIDE == 1){
+  //  clearInterval(start);
+    x.style.visibility = "hidden";
+    a.style.visibility = "visible";
+
+    /*setTimeout(function(){
+      x.style.visibility = "visible";
+      a.style.visibility = "hidden";
+    }, 10000);*/
+  }
+
+  else if(SIDE == 2){
+  //  clearInterval(start);
+    x.style.visibility = "hidden";
+    b.style.visibility = "visible";
+
+    /*setTimeout(function(){
+      x.style.visibility = "visible";
+      b.style.visibility = "hidden";
+    }, 10000);*/
+  }else if(SIDE == 3){
+  //  clearInterval(start);
+    x.style.visibility = "hidden";
+    c.style.visibility = "visible";
+
+    /*setTimeout(function(){
+    x.style.visibility = "visible";
+    c.style.visibility = "hidden";
+    }, 10000);*/
+  }else if(SIDE == 4){
+  //  clearInterval(start);
+    x.style.visibility = "hidden";
+    d.style.visibility = "visible";
+
+    /*setTimeout(function(){
+      x.style.visibility = "visible";
+        d.style.visibility = "hidden";
+
+      }, 10000);*/
+  }
+  //socket.emit('sendLocation', JSON.stringify({traffic_signal_id: 0, location:{lat:12.924945, lon:77.6333847},
+  //key:'9e4207dacba9b1a2e4185a80ddb88271302db0501455d49d0539cf0a7ba52ba7'}));
+});
+/*
+$(window).on('beforeunload', function(){
+  socket.close();
+});*/
+
+socket.on('red_signal', function (data) {
+
+  //var jsonData = JSON.parse(data);
+  console.log('REQUEST TO RED, thank you its completed!');
+  var signal_id = '5921454f281b383466ace425';
+  if (signal_id != data.id) {
+    return;
+  }
+  var SIDE = data.side;
+
+  if(SIDE == 1){
+  //  clearInterval(start);
+    x.style.visibility = "visible";
+    a.style.visibility = "hidden";
+
+    /*setTimeout(function(){
+      x.style.visibility = "visible";
+      a.style.visibility = "hidden";
+    }, 10000);*/
+  }
+
+  else if(SIDE == 2){
+  //  clearInterval(start);
+    x.style.visibility = "visible";
+    b.style.visibility = "hidden";
+
+    /*setTimeout(function(){
+      x.style.visibility = "visible";
+      b.style.visibility = "hidden";
+    }, 10000);*/
+  }else if(SIDE == 3){
+  //  clearInterval(start);
+  x.style.visibility = "visible";
+  c.style.visibility = "hidden";
+
+    /*setTimeout(function(){
+    x.style.visibility = "visible";
+    c.style.visibility = "hidden";
+    }, 10000);*/
+  }else if(SIDE == 4){
+  //  clearInterval(start);
+    x.style.visibility = "visible";
+      d.style.visibility = "hidden";
+
+    /*setTimeout(function(){
+      x.style.visibility = "visible";
+        d.style.visibility = "hidden";
+
+      }, 10000);*/
+  }
+  //socket.emit('sendLocation', JSON.stringify({traffic_signal_id: 0, location:{lat:12.924945, lon:77.6333847},
+  //key:'9e4207dacba9b1a2e4185a80ddb88271302db0501455d49d0539cf0a7ba52ba7'}));
+});
+
+
+</script>
+
+</html>
