@@ -40,9 +40,6 @@ PreemptionRequest.prototype.notify = function(request){
 
 PreemptionRequest.prototype.update = function(location, request, socket){
 
-    console.log("Request object in update: ");
-    console.log(request);
-
     var that = this;
     var req_obj = request;
     console.log('called update');
@@ -51,39 +48,12 @@ PreemptionRequest.prototype.update = function(location, request, socket){
 	  location.get_correct_signal(TrafficSignalManager, this.locations).then(function(v){
       	  console.log("get_nearest is resolved "+ v);
           req_obj.traffic_id = v._id;
-	  var qManager = QueueManager.getInstance();
-    this.locationUpdates.push(request.direction_data);
-    if(this.locationUpdates.length == 10){
-      console.log("Run the analyzer now!");
-    }
-    //update the variables
-    //location.getNearestSingalFromAllPointsAndReturnTheRightSignalAndSide;
-
-    location.get_nearest(TrafficSignalManager).then(function(v){
-      console.log("get_nearest is resolved "+ v);
-      //console.log(v);
-      that.locations.push(v[0]);
-      console.log("LENGTH : " + that.locations.length);
-      if(that.locations.length == 10){
-        TrafficSignalManager.getInstance().get_signal(v[0]).then(function(result){
-          console.log("get_signal resolved " + result);
-
-          //console.log("REQ OBJ : " + req_obj);
-          request.traffic_id = result._id;
-          //queue the object to QueueManager
-          var qManager = QueueManager.getInstance();
+		      var qManager = QueueManager.getInstance();
           qManager.addRequest(req_obj);
           //send a response to the phone its successful
           console.log("REQUEST IS BEING ADDED TO QUEUE!");
           //send the client that the request has been authorized
           socket.emit("AUTHORIZED", v);
-          setTimeout(socket.emit("AUTHORIZED", result), 100);
-        }).catch(function(result){
-          console.log("ERR : " + result);
-        });
-        console.log(this.locations.length);
-        console.log(this._id);
-      }
 
     }).catch(function(v){
         console.log('ERROR : ' + v);
