@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
 
   console.log('ON CONECTION');
-  socket.emit('connected');
+  socket.emit('onConnected');
 
   socket.on('authorize', function (data) {
     console.log('ON AUTHORIZE');
@@ -49,7 +49,6 @@ io.on('connection', function (socket) {
     setTimeout(function(){
       socket.emit('on_registration', {status:resStatus});
     }, 2000);
-
   });
 
   socket.on('location_changed', function (data) {

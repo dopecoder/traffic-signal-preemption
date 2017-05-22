@@ -72,6 +72,8 @@ var PreemptionRequestHandler = (function(){
         for(var request_key of this.request_key_list){
             if(request_key == Request.authentication_data){
                 var request = this.request_list[request_key];
+                console.log("Request object in onLocationChanged: ");
+                console.log(request);
                 var location = new Location(Request.direction_data.latitude, Request.direction_data.longitude);
                 request.direction_data = Request.direction_data;
                 request.update(location, Request, socket);
