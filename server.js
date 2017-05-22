@@ -68,7 +68,6 @@ io.on('connection', function (socket) {
       //var req = new PreemptionRequest(res._id, res.traffic_id, res.authentication_data, res.direction_data);
       //convert json to objrcts
       //handler.onLocationChanged(req, socket);
-      PreemptionCompletionListner.getInstance().onResponse(data);
       //turn signal green
       console.log(data.id);
       io.emit('green_signal', {id:data.id, side:data.side+1});
@@ -85,8 +84,10 @@ io.on('connection', function (socket) {
       console.log("Turn lights red");
       //turn signal red
       console.log(data.id);
+      PreemptionCompletionListner.getInstance().onResponse(data);
       setTimeout(function(){
-        io.emit('red_signal', {id:data.id, side:data.side+1});
+        var side_no = data.side+1;
+        io.emit('red_signal', {id:data.id, side:side_no});
       }, 2500);
     });
 
